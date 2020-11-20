@@ -1,14 +1,4 @@
-<?php 
 
-session_start();
-	
-	if (isset($_GET['logout'])) {
-	  	session_destroy();
-	  	unset($_SESSION['username']);
-	  	header("location: index.php");
-	 }
-
- ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -39,7 +29,7 @@ session_start();
 		//for home page display #not yet clicking 
 		$(document).ready(function(){  //for on input search.
 				$.ajax({
-					url: 'home.php',
+					url: 'https://betlogan.000webhostapp.com/PAGES/index.php',
 					type: 'post',
 					data: {search: $(this).val()}, //value of search
 					success:function(result){
@@ -302,112 +292,6 @@ session_start();
   logged_out_greeting="Balita Master? :)">
       </div>
 
-	<header>
-		<div class="logo" style="display: flex;">
-				<ul class="color_coding">
-					<li style="list-style:none;">Betlordz&nbsp;</li>
-					<li style="color:red;" class="showBelow500px">Not Enough Credit</li>
-					<li style="color:blue;" class="showBelow500px">Your Bet</li>
-					<li style="color:orange;" class="showBelow500px">Taken bet</li>
-				</ul>
-		</div>
-		<nav>
-			<ul>
-				<li><a href="index.php" class="home" id="home" >Home </a></li>
-				<li><a href="predictions2.php?sortBet=LATEST" class="prediction" id="portfolio">Prediction</a></li>				        
-				<?php
-					
-
-
-					if(!isset($_SESSION['username'])){
-						echo '<li><a href="#Login" class="login" id="login">Login</a></li>';
-					}else{
-
-						$username = $_SESSION['username'];
-
-						$db = mysqli_connect('localhost','id15441368_gamblingusername','Awklzqwe1^zxc','id15441368_gamblingdb');
-						$query = "SELECT * FROM tbl_users WHERE username='$username'";
-					    $result = mysqli_query($db, $query);
-					    if(mysqli_num_rows($result)>0){
-					    	$row = mysqli_fetch_array($result);
-
-					    	//with two decimals
-					    	$TwoDecimalCredits = number_format($row['credits'], 2, '.', '');
-					    	// with comma
-					    	$TwoDecimalCredits = number_format($TwoDecimalCredits,2);
-					    	// $TwoDecimalCredits = $row['credits'] +5500;
-
-					    	// need balik sa 2decimals para ma compute.
-					    	// $TwoDecimalCredits = number_format($row['credits'], 2, '.', '');
-					    	// $TwoDecimalCredits +=1;
-
-					    	//if admin or not
-					    	// if($row['user_type']=='admin'){
-					    	if($row['user_type']=='player'){
-
-					    		// echo "<script>
-					    		// 	alert('admin ako par');
-					    		// </script>";
-
-					    		echo '
-
-					    		<li ><a href="add_credits.php" class="addMatch2">Add Credits</a></li>
-					    		<li><a href="#AddMatch" class="addMatch2 addMatchClick" >Add Match</a></li>
-							 	<li ><a href="my_profile2.php" class="myAddedMatch logout" >My Added Matches</a></li>
-							 	<li ><a href="my_bets.php" class="myBets logout" >My Bets</a></li>
-					    		<li>
-						    		<a href="#MyProfile" class="profile" id="login"><y class="hide_caret_down"><i class="fa fa-caret-down" aria-hidden="true"></i></y>
-							 			<img  class="round-image" alt="image"  src="../IMAGES/'.$row['image'].'"/>
-							 			<x>'.$username.'&nbsp;&nbsp;₱'.$TwoDecimalCredits.'</x>
-							 		</a>
-							 		<ul class="dropdown">
-							 			<li ><a href="add_credits.php" class="addMatch profile">Add Credits&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
-							 			<li ><a href="#AddMatch" class="addMatch addMatchClick" >Add Match</a></li>
-							 			<li ><a href="#MyProfile" class="profile" >My Added Matches</a></li>
-							 			<li ><a href="my_bets.php" class="profile" >My Bets</a></li>
-							           <li ><a href="index.php?logout=1" class="logoutX">Log out</a></li>
-							        </ul>
-						 		</li>
-                                
-						 		<li><a href="#MyProfile" class="myCredits">Credits: ₱'.$TwoDecimalCredits.'</a></li>
-						 		<li ><a href="index.php?logout=1" class="logout">Log out</a></li>';	
-
-					    	}else{
-
-					    		// echo "<script>
-					    		// 	alert('d ako admin par');
-					    		// </script>";
-
-					    		echo '
-					    		
-							      <li><a href="payments.php"  class="addMatch2">Payments</a></li>
-							     <li><a href="users.php" class="addMatch2">Users Profile</a></li>
-					    		<li>
-						    		<a href="#" >
-						    			<y class="hide_caret_down"><i class="fa fa-caret-down" aria-hidden="true"></i></y>
-							 			<img  class="round-image" alt="image"  src="../IMAGES/'.$row['image'].'"/>
-							 			<x>'.$username.'</x>
-							 		</a>
-							 		<ul class="dropdown">
-							           <li><a href="payments.php" >Payments</a></li>
-							           <li><a href="users.php" >Users Profile</a></li>
-							           <li><a href="index.php?logout=1" class="logoutX">Log out</a></li>
-							        </ul>
-						 		</li>
-						 		<li ><a href="index.php?logout=1" class="logout">Log out</a></li>';	
-					    	}
-					    	
-					    }
-					}
-				?>
-			</ul>
-		</nav>
-		<div class="menu-toggle">
-			<i class="fa fa-bars" aria-hidden="true"></i>
-		</div>
-
-	</header>
-	
 		<span id="result"></span>
 		
 		
